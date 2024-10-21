@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  password String
+  name String
+  cpf String @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  
+
+  @@map("users")
+  PermissionsUsers PermissionsUsers[] @relation("user")
+}
+
+model Permissions {
+  id String @id @default(uuid())
+  title String @unique
+  level String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("permissions")
+  PermissionsUsers PermissionsUsers[] @relation("permission")
+}
+
+model PermissionsUsers {
+  user User @relation("user", fields: [userId], references: [id])
+  userId String
+  permissions Permissions @relation("permission", fields: [permissionId], references: [id])
+  permissionId String
+
+  @@id([userId, permissionId])
+  @@map("permissions_users")
+}
