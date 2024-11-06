@@ -1,7 +1,9 @@
 import { prisma } from "../../../../prisma/client";
 import { LoginDTO } from "../../dtos/Login";
 import { compareSync } from "bcryptjs";
+import jwt from 'jsonwebtoken';
 
+const jwtSecret = String(process.env.JWT_SECRET)
 export class Login {
     async execute({login, password}: LoginDTO) {
         const userExists = await prisma.user.findFirst({
@@ -17,12 +19,18 @@ export class Login {
             const passwordIsValid = compareSync(password, userExists.password);
 
             if (passwordIsValid) {
-                return console.log('Login efetuado');
+                const token = jwt.sign(
+                    { userId: userExists.id, email: userExists.email },
+                    jwtSecret,
+                    { expiresIn: '6h' }
+                );
+
+                return { token };
             } else {
-                return console.log('Senha incorreta');
+                return { error: 'Seu CPF/e-mail e/ou senha estão incorretos!' };
             }
         } else {
-            console.log('Usuário não existe');
+            return { error: 'Seu CPF/e-mail e/ou senha estão incorretos!' };
         }
     }
 }
