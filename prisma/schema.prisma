@@ -7,35 +7,87 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Book {
+  id String @id @default(uuid())
+  title String
+  author String
+  year Int
+  edition Int?
+  publisher String
+  volume Int?
+  isbn String @unique
+  totalPages Int
+  totalCopies Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  copies BookCopy[]
+  loans Loan[]
+
+  @@map("books")
+}
+
+model BookCopy {
+  id String @id @default(uuid())
+  book Book @relation(fields: [bookId], references: [id])
+  bookId String
+  isAvailable Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  loans Loan[]
+
+  @@map("book_copies")
+}
+
 model User {
   id String @id @default(uuid())
   email String @unique
   password String
   name String
   cpf String @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  
+  phone String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  loans Loan[]
+  permissions PermissionsUsers[]
 
   @@map("users")
-  PermissionsUsers PermissionsUsers[] @relation("user")
 }
+
+model Loan {
+  id               String    @id @default(uuid())
+  user             User      @relation(fields: [userId], references: [id])
+  userId           String
+  bookCopy         BookCopy  @relation(fields: [bookCopyId], references: [id])
+  bookCopyId       String
+  loanDate         DateTime  @default(now())
+  returnDate       DateTime?
+  expectedReturnDate DateTime?
+  status           String    @default("borrowed")
+
+  @@map("loans")
+  Book Book[]
+}
+
 
 model Permissions {
   id String @id @default(uuid())
   title String @unique
   level String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  permissionsUsers PermissionsUsers[]
 
   @@map("permissions")
-  PermissionsUsers PermissionsUsers[] @relation("permission")
 }
 
 model PermissionsUsers {
-  user User @relation("user", fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
   userId String
-  permissions Permissions @relation("permission", fields: [permissionId], references: [id])
+  permission Permissions @relation(fields: [permissionId], references: [id])
   permissionId String
 
   @@id([userId, permissionId])
