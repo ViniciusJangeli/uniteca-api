@@ -1,13 +1,17 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { CreateBookUseCase } from "./CreateBook";
 
 export class CreateBookController {
-  async handle(req: Request, res: Response) {
-    const { title, author, year, edition, publisher, volume, isbn, totalPages, totalCopies } = req.body;
+  async handle(req: Request, res: Response, next: NextFunction) {
+    try {
+       const { titulo, autor, ano, edicao, editora, volume, isbn, totalPaginas, totalExemplares } = req.body;
+       const criadoPorId = "c77ea826-48e6-4b5b-9be9-61d7bf54f5d8"
 
-    const useCase = new CreateBookUseCase();
-    const result = await useCase.execute({ title, author, year, edition, publisher, volume, isbn, totalPages, totalCopies });
-
-    return res.status(201).json(result);
-  }
+       const useCase = new CreateBookUseCase();
+       const result = await useCase.execute({ titulo, autor, ano: parseInt(ano), edicao: parseInt(edicao), editora, volume: parseInt(volume), isbn, totalPaginas: parseInt(totalPaginas), totalExemplares: parseInt(totalExemplares), criadoPorId });
+       return res.status(201).json(result);
+    } catch (error) {
+       next(error);
+    }
+ }
 }

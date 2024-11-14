@@ -3,8 +3,8 @@ import { CreateUserController } from "../modules/users/useCases/createUser/Creat
 
 const createUserController = new CreateUserController();
 
-const userRoutes = Router();
+const usuariosRoutes = Router();
 
-userRoutes.post("/", createUserController.handle);
+usuariosRoutes.post("/criar", createUserController.handle);
 
-export { userRoutes };
+export { usuariosRoutes };

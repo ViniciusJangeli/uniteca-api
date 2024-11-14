@@ -1,12 +1,12 @@
-import { User } from "@prisma/client";
+import { Usuario } from "@prisma/client";
 import { prisma } from "../../../../prisma/client";
 import { CreateUserDTO } from "../../dtos/CreateUserDTO";
 import { genSaltSync, hashSync } from "bcryptjs";
 
 export class CreateUserUseCase {
-    async execute ({email, name, cpf, password}: CreateUserDTO): Promise<User>{
+    async execute ({email, senha, nome, cpf, telefone}: CreateUserDTO): Promise<Usuario>{
 
-    const userAlreadyExists = await prisma.user.findUnique({
+    const userAlreadyExists = await prisma.usuario.findUnique({
         where: {
             email,
             cpf
@@ -18,14 +18,15 @@ export class CreateUserUseCase {
     }
 
     const salt = genSaltSync(10);
-    const passwordHashed = hashSync(password, salt);
+    const passwordHashed = hashSync(senha, salt);
 
-    const user = await prisma.user.create({
+    const user = await prisma.usuario.create({
     data: {
         email, 
-        name, 
+        nome, 
         cpf, 
-        password: passwordHashed
+        senha: passwordHashed,
+        telefone
     }})
 
     return user

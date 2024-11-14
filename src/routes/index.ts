@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { userRoutes } from "./user.routes";
+import { usuariosRoutes } from "./usuarios.routes";
 import { loginRoutes } from "./login.routes";
-import { booksRoutes } from "./books.routes";
+import { livrosRoutes } from "./livros.routes";
 
 const routes = Router()
 
-routes.use("/users", userRoutes)
+routes.use("/usuarios", usuariosRoutes)
 routes.use("/auth", loginRoutes)
-routes.use("/book", booksRoutes)
+routes.use("/livros", livrosRoutes)
 
 
 export {routes}

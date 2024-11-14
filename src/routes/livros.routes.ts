@@ -5,16 +5,16 @@ import { DeleteBookController } from "../modules/books/useCases/deleteBook/Delet
 import { UpdateBookController } from "../modules/books/useCases/updateBook/UpdateBookController";
 
 const checkBookController = new CheckBookAvailabilityController();
-const createBookController = new CreateBookController();
 const deleteBookController = new DeleteBookController();
 const updateBookController = new UpdateBookController();
+const createBookController = new CreateBookController();
 
 
-const booksRoutes = Router();
+const livrosRoutes = Router();
 
-booksRoutes.post("/create", createBookController.handle);
-booksRoutes.post("/update", updateBookController.handle);
-booksRoutes.post("/delete", deleteBookController.handle);
-booksRoutes.post("/check", checkBookController.handle);
+livrosRoutes.post("/criar", createBookController.handle);
+// livrosRoutes.post("/update", updateBookController.handle);
+// livrosRoutes.post("/delete", deleteBookController.handle);
+// livrosRoutes.post("/check", checkBookController.handle);
 
-export { booksRoutes };
+export { livrosRoutes };

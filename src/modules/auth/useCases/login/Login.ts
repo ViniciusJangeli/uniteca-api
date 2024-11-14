@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 const jwtSecret = String(process.env.JWT_SECRET)
 export class Login {
     async execute({login, password}: LoginDTO) {
-        const userExists = await prisma.user.findFirst({
+        const userExists = await prisma.usuario.findFirst({
             where: {
                 OR: [
                     { email: login },
@@ -16,7 +16,7 @@ export class Login {
         });
 
         if (userExists) {
-            const passwordIsValid = compareSync(password, userExists.password);
+            const passwordIsValid = compareSync(password, userExists.senha);
 
             if (passwordIsValid) {
                 const token = jwt.sign(
