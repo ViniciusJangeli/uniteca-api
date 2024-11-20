@@ -1,6 +1,4 @@
 import { prisma } from "../../../../../prisma/client";
-import { GetBook } from "../../../dtos/GetBookDTO";
-
 
 export class GetAllBooksUseCase {
     async execute() {

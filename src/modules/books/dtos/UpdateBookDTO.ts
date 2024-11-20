@@ -1,13 +1,14 @@
 export interface UpdateBookDTO {
+    livro: string;
     id: string;
-    title?: string;
-    author?: string;
-    year?: number;
-    edition?: number;
-    publisher?: string;
-    volume?: number;
-    isbn?: string;
-    totalPages?: number;
-    totalCopies?: number;
+    titulo: string;
+    autor: string;
+    ano: number;
+    edicao: number;
+    editora: string;
+    volume: number;
+    isbn: string;
+    totalPaginas: number;
+    totalExemplares: number;
   }
   

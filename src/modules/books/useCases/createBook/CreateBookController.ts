@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { CreateBookUseCase } from "./CreateBook";
 
 export class CreateBookController {
-  async handle(req: Request, res: Response, next: NextFunction) {
+  async handle(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const {
         titulo,
@@ -32,12 +32,12 @@ export class CreateBookController {
         criadoPorId,
       });
 
-      return res.status(201).json({ result });
+      return res.status(201).json(result);
     } catch (error: any) {
       if (error.message === "Livro já existe!") {
         return res.status(409).json({ message: error.message });
       }
-      
+
       next(error);
     }
   }

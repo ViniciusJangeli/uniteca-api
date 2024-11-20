@@ -1,17 +1,34 @@
 import { prisma } from "../../../../prisma/client";
-
+import { CheckBookAvailabilityDTO } from "../../dtos/AvailabilityDTO";
 
 export class CheckBookAvailabilityUseCase {
-    async execute(bookId: string): Promise<boolean> {
+  async execute(livroId: string): Promise<CheckBookAvailabilityDTO> {
+    try {
 
-      const availableCopies = await prisma.bookCopy.count({
-        where: {
-          bookId,
-          isAvailable: true
-        }
+      // Obter o total de exemplares do livro
+      const livro = await prisma.livro.findUnique({
+        where: { id: livroId },
+        select: { totalExemplares: true },
       });
 
-      return availableCopies > 0;
+      if (!livro) {
+        throw new Error("Livro não encontrado");
+      }
+
+      // Contar empréstimos ativos
+      const emprestimosAtivos = await prisma.emprestimo.count({
+        where: { livroId, status: "emprestado" },
+      });
+
+      // Calcular exemplares disponíveis
+      const exemplaresDisponiveis = livro.totalExemplares - emprestimosAtivos;
+
+      return {
+        disponivel: exemplaresDisponiveis > 0,
+        exemplaresDisponiveis,
+      };
+    } catch (error) {
+      throw new Error("Erro ao verificar a disponibilidade do livro");
     }
   }
-  
+}
