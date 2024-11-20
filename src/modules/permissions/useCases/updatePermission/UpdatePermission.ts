@@ -12,7 +12,6 @@ export class UpdatePermissionUseCase {
       throw new Error("Permissão não encontrada!");
     }
 
-    // Atualizando a permissão
     return await prisma.permissao.update({
       where: { id },
       data: {

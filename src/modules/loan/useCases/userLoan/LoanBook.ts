@@ -8,7 +8,6 @@ export class LoanBookUseCase {
       data: { userId, bookCopyId, loanDate, expectedReturnDate }
     });
 
-    // Marque a cópia como indisponível após o empréstimo
     await prisma.bookCopy.update({
       where: { id: bookCopyId },
       data: { isAvailable: false }

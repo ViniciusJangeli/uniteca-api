@@ -3,7 +3,6 @@ import { UpdateBookDTO } from "../../dtos/UpdateBookDTO";
 
 export class UpdateBookUseCase {
   async execute(data: UpdateBookDTO) {
-    console.log(data)
     try {
       const updatedBook = await prisma.livro.update({
         where: { id: data.id },

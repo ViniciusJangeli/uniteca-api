@@ -4,7 +4,7 @@ import { prisma } from "../../../../prisma/client";
 export class CalculateFineController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { loanId } = req.params;
-    const finePerDay = 1; // Exemplo: 1 unidade de multa por dia
+    const finePerDay = 1; 
 
     try {
       const loan = await prisma.loan.findUnique({

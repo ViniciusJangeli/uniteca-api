@@ -4,5 +4,5 @@ export interface CreateUserDTO {
     nome: string;
     cpf: string;
     telefone?: string;
-    cargoId: string;
+    permissaoId: string;
   }

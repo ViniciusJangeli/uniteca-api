@@ -8,7 +8,6 @@ import { GetPermissionSubPermissionsController } from "../modules/permissions/us
 
 const permissaoRoutes = Router();
 
-// Instanciando controllers
 const createPermissionController = new CreatePermissionController();
 const getPermissionsController = new GetPermissionsController();
 const getSubPermissionsController = new GetSubPermissionsController();
@@ -16,7 +15,7 @@ const editPermissionController = new UpdatePermissionController();
 const deletePermissionController = new DeletePermissionController();
 const getPermissionSubPermissionsController = new GetPermissionSubPermissionsController();
 
-// Rotas de Permissão
+
 permissaoRoutes.post("/criar", async (req, res) => {
   await createPermissionController.handle(req, res);
 });

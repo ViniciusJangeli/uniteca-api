@@ -3,8 +3,7 @@ import { CreateUserUseCase } from "./CreateUser";
 
 export class CreateUserController {
   async handle(req: Request, res: Response): Promise<Response> {
-    const { email, senha, nome, cpf, telefone, cargoId } = req.body;
-
+    const { email, senha, nome, cpf, telefone, permissaoId } = req.body;
     const useCase = new CreateUserUseCase();
 
     try {
@@ -14,7 +13,7 @@ export class CreateUserController {
         nome,
         cpf,
         telefone,
-        cargoId, // Cargo especificado no body
+        permissaoId,
       });
 
       return res.status(201).json({

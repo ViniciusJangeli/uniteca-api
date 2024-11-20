@@ -26,7 +26,6 @@ export class GetPermissionSubPermissionsUseCase {
       throw new Error("Nenhuma subpermissão encontrada para esta permissão.");
     }
 
-    // Formatar o retorno para conter apenas `id` e `descricao` diretamente no array
     return subPermissoes.map(relacao => relacao.subPermissao);
   }
 }

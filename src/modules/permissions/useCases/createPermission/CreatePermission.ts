@@ -12,7 +12,6 @@ export class CreatePermissionUseCase {
       throw new Error("Permissão já existe!");
     }
 
-    // Criação da permissão
     const permission = await prisma.permissao.create({
       data: {
         titulo,

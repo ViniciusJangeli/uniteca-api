@@ -5,7 +5,7 @@ export class CheckBookAvailabilityUseCase {
   async execute(livroId: string): Promise<CheckBookAvailabilityDTO> {
     try {
 
-      // Obter o total de exemplares do livro
+
       const livro = await prisma.livro.findUnique({
         where: { id: livroId },
         select: { totalExemplares: true },
@@ -15,12 +15,10 @@ export class CheckBookAvailabilityUseCase {
         throw new Error("Livro não encontrado");
       }
 
-      // Contar empréstimos ativos
       const emprestimosAtivos = await prisma.emprestimo.count({
         where: { livroId, status: "emprestado" },
       });
 
-      // Calcular exemplares disponíveis
       const exemplaresDisponiveis = livro.totalExemplares - emprestimosAtivos;
 
       return {

@@ -8,7 +8,7 @@ export class CheckBookAvailabilityController {
     this.checkBookAvailabilityUseCase = new CheckBookAvailabilityUseCase();
   }
 
-  async handle(req: Request, res: Response, next: NextFunction): Promise<Response | void> {  // Alterado para Promise<Response | void>
+  async handle(req: Request, res: Response, next: NextFunction): Promise<Response | void> { 
     const livroId = req.query.livroId as string | undefined;
   
     if (!livroId || typeof livroId !== 'string') {
@@ -17,11 +17,9 @@ export class CheckBookAvailabilityController {
   
     try {
       const disponibilidade = await this.checkBookAvailabilityUseCase.execute(livroId);
-      return res.status(200).json(disponibilidade);  // Retorno explícito da resposta
+      return res.status(200).json(disponibilidade);  
     } catch (error) {
       next(error);
     }
-
-    // Garantir que o método sempre retorne algo, mesmo que seja um `void`
   }
 }
