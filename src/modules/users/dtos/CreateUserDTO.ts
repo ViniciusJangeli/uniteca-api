@@ -1,7 +1,8 @@
 export interface CreateUserDTO {
-    email: string
-    nome: string
-    cpf: string
-    senha: string
-    telefone: string
-}
+    email: string;
+    senha: string;
+    nome: string;
+    cpf: string;
+    telefone?: string;
+    cargoId: string;
+  }

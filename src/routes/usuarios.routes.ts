@@ -5,6 +5,8 @@ const createUserController = new CreateUserController();
 
 const usuariosRoutes = Router();
 
-usuariosRoutes.post("/criar", createUserController.handle);
+usuariosRoutes.post("/criar", async (req, res) => {
+  await createUserController.handle(req, res);
+});
 
 export { usuariosRoutes };

@@ -71,6 +71,7 @@ model Permissao {
   atualizadoEm DateTime @updatedAt
 
   permissoesUsuarios PermissoesUsuarios[]
+  permissoesRelacao PermissoesRelacao[]
 
   @@map("permissoes")
 }
@@ -96,4 +97,25 @@ model HistoricoMultas {
 
   @@map("historico_multas")
   Usuario Usuario[]
+}
+
+model SubPermissoes {
+  id        String   @id @default(uuid())
+  descricao String
+  criadoEm  DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  permissoesRelacao PermissoesRelacao[]
+
+  @@map("sub_permissoes")
+}
+
+model PermissoesRelacao {
+  id           String   @id @default(uuid())
+  permissao    Permissao @relation(fields: [permissaoId], references: [id])
+  permissaoId  String
+  subPermissao SubPermissoes @relation(fields: [subPermissaoId], references: [id])
+  subPermissaoId String
+
+  @@map("permissoes_relacao")
 }
