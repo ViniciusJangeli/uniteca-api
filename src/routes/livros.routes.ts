@@ -4,12 +4,14 @@ import { CreateBookController } from "../modules/books/useCases/createBook/Creat
 import { GetAllBooksController } from "../modules/books/useCases/getBook/allBooks/GetAllBooksController";
 import { GetOneBookController } from "../modules/books/useCases/getBook/oneBook/GetOneBookController";
 import { UpdateBookController } from "../modules/books/useCases/updateBook/UpdateBookController";
+import { GetAvailableBooksController } from "../modules/books/useCases/availableBooks/AvailableBooksController";
 
 const checkBookController = new CheckBookAvailabilityController();
 const createBookController = new CreateBookController();
 const getAllBooksController = new GetAllBooksController();
-const getOneBookController = new GetOneBookController()
-const updateBookController = new UpdateBookController
+const getOneBookController = new GetOneBookController();
+const updateBookController = new UpdateBookController();
+const availableBooksController = new GetAvailableBooksController();
 
 const livrosRoutes = Router();
 
@@ -31,6 +33,10 @@ livrosRoutes.get("/informacoes/:id", async (req, res) => {
 
 livrosRoutes.put("/atualizar/:id", async (req, res) => {
   await updateBookController.handle(req, res );
+});
+
+livrosRoutes.get("/disponiveis", async (req, res, next) => {
+  await availableBooksController.handle(req, res, next );
 });
 
 
