@@ -1,15 +1,20 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Login } from "./Login";
 
+export class LoginController {
+  async handle(req: Request, res: Response, next: NextFunction) {
+    const { email, password } = req.body;
+    const useCase = new Login();
 
-export class LoginController{
+    try {
+      const result = await useCase.execute({ email, password });
+      return res.status(200).json(result);
+    } catch (error: any) {
+      if (error.message === "Erro ao Autenticar") {
+        return res.status(409).json({ message: error.message });
+      }
 
-    async handle(req: Request, res: Response) {
-        const {login, password} = req.body
-        const useCase = new Login()
-
-        const result = await useCase.execute({login, password})
-
-        return res.status(200).send(result)
+      next(error);
     }
+  }
 }

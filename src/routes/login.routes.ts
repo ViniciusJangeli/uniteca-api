@@ -5,6 +5,8 @@ const loginController = new LoginController();
 
 const loginRoutes = Router();
 
-loginRoutes.post("/login", loginController.handle);
+loginRoutes.post("/login", async (req, res, next) => {
+    await loginController.handle(req, res, next);
+  });
 
 export { loginRoutes };
