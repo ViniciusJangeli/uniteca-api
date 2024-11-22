@@ -57,7 +57,7 @@ model Emprestimo {
   dataEmprestimo DateTime @default(now())
   dataDevolucao DateTime?
   dataDevolucaoPrevista DateTime?
-  status String @default("emprestado")
+  status String @default("Emprestado")
 
   historicoMultas HistoricoMultas[]
 

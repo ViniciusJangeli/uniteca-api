@@ -16,7 +16,7 @@ export class CheckBookAvailabilityUseCase {
       }
 
       const emprestimosAtivos = await prisma.emprestimo.count({
-        where: { livroId, status: "emprestado" },
+        where: { livroId, status: "Emprestado" },
       });
 
       const exemplaresDisponiveis = livro.totalExemplares - emprestimosAtivos;

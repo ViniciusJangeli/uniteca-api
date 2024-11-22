@@ -6,7 +6,7 @@ export class GetAvailableBooksUseCase {
     const livros = await prisma.livro.findMany({
       include: {
         emprestimos: {
-          where: { status: "emprestado" },
+          where: { status: "Emprestado" },
         },
       },
     });

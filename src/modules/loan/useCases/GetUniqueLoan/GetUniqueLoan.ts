@@ -7,7 +7,7 @@ export class GetUserLoansUseCase {
     return await prisma.emprestimo.findMany({
       where: {
         usuarioId,
-        status: 'emprestado',
+        status: 'Emprestado',
       },
       include: {
         livro: true,

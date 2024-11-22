@@ -42,7 +42,7 @@ export class ReturnLoanUseCase {
       where: { id: emprestimoId },
       data: {
         dataDevolucao,
-        status: "devolvido",
+        status: "Devolvido",
       },
     });
 
